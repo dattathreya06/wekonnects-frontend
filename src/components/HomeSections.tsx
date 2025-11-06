@@ -5,7 +5,7 @@ import city2 from "../assets/city2.png";
 import city3 from "../assets/city3.png";
 import city4 from "../assets/city4.png";
 import gallery1 from "../assets/food-banner.png";
-import gallery2 from "../assets/food-banner.png";
+
 import { Building2, Users2, UserRound, Link, IndianRupee } from "lucide-react";
 
 export default function HomeSections() {
@@ -72,7 +72,7 @@ export default function HomeSections() {
             <div className="play-btn">▶</div>
           </div>
           <div className="gallery-card">
-            <img src={gallery2} alt="Gallery 2" />
+            <img src={gallery1} alt="Gallery 2" />
             <div className="play-btn">▶</div>
           </div>
         </div>
