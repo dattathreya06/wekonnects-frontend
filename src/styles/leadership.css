@@ -33,7 +33,7 @@
   flex-shrink: 0;
   border: 3px solid transparent;
   border-radius: 10px;
-  border-image: linear-gradient(180deg, #1274C0 0%, #FF6C00 100%);
+  border-image: (180deg, #1274C0 0%, #FF6C00 100%);
   border-image-slice: 1;
   background: #fff;
   display: flex;

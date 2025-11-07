@@ -108,7 +108,9 @@ export default function Header() {
           <ScrollLink to="#advertise" className="nav-item nav-advertise">
             <IconMegaphone /> Advertise
           </ScrollLink>*/}
-
+<Link className="nav-item nav-about" to="/businesscategories">
+           business
+          </Link>
           <ScrollLink
             to="#free-listing"
             className="nav-item nav-free"

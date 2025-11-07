@@ -12,6 +12,8 @@ import SignupPage from "./pages/SignupPage";
 import Leadership from "./pages/LeadershipPage";
 import Home from "./pages/HomePage";
 import Contact from "./pages/ContactPage";
+import HomeCategories from "./pages/HomeBusinessCategories";
+import BusinessDetails from "./pages/BusinessDetails";
 
 // Smart Layout Wrapper
 function Layout() {
@@ -37,6 +39,8 @@ function Layout() {
           />
           <Route path="/leadership" element={<Leadership />} />
           <Route path="/home" element={<Home />}/>
+          <Route path="/businesscategories" element={<HomeCategories />}/>
+          <Route path="/business-details" element={<BusinessDetails />}/>
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginPage />} />
