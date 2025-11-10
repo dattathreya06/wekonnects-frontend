@@ -1127,3 +1127,14 @@ body{
     justify-content: center;
   }
 }
+.input-error {
+  border: 1px solid #e74c3c !important;
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: block;
+}
