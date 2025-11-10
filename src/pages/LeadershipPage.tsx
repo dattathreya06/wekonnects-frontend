@@ -88,7 +88,7 @@ const Leadership: React.FC = () => {
 
   const tabs = ["Head Table", "Coordinators", "Members"];
 
-  const [selectedCity, setSelectedCity] = useState<CityData>(cities[0]);
+  const [selectedCity, ] = useState<CityData>(cities[0]);
   const [activeTab, setActiveTab] = useState("Head Table");
 
   // Get members based on tab
