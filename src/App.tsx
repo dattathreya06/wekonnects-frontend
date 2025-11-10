@@ -1,4 +1,3 @@
-// src/App.tsx
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -15,17 +14,30 @@ import Contact from "./pages/ContactPage";
 import HomeCategories from "./pages/HomeBusinessCategories";
 import BusinessDetails from "./pages/BusinessDetails";
 
-// Smart Layout Wrapper
+/* === Admin Layout + Pages === */
+import DashboardLayout from "./components/layout/DashboardLayout";
+import DashboardPage from "./pages/AdminDashboard";
+import EducationInfo from "./pages/AdminDashboard/EducationInfo";
+
 function Layout() {
   const location = useLocation();
-  const noHeaderPaths = ["/login", "/signup"];
-  const hideHeader = noHeaderPaths.includes(location.pathname);
+
+  // hide header/footer on all admin routes (anything starting with /admin)
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
     <>
-      {!hideHeader && <Header />}
-      <main className="container" style={{ padding: hideHeader ? "0" : "32px 0", minHeight: "80vh" }}>
+      {!isAdminRoute && <Header />}
+
+      <main
+        className="container"
+        style={{
+          padding: isAdminRoute ? "0" : "32px 0",
+          minHeight: "80vh",
+        }}
+      >
         <Routes>
+          {/* ====== PUBLIC PAGES ====== */}
           <Route
             path="/"
             element={
@@ -38,17 +50,23 @@ function Layout() {
             }
           />
           <Route path="/leadership" element={<Leadership />} />
-          <Route path="/home" element={<Home />}/>
-          <Route path="/businesscategories" element={<HomeCategories />}/>
-          <Route path="/business-details" element={<BusinessDetails />}/>
+          <Route path="/home" element={<Home />} />
+          <Route path="/businesscategories" element={<HomeCategories />} />
+          <Route path="/business-details" element={<BusinessDetails />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-         
+
+          {/* ====== ADMIN PAGES (nested inside DashboardLayout) ====== */}
+          <Route path="/admin" element={<DashboardLayout />}>
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="jobs/education" element={<EducationInfo />} />
+          </Route>
         </Routes>
       </main>
-      <Footer />
+
+      {!isAdminRoute && <Footer />}
     </>
   );
 }
