@@ -4,36 +4,113 @@
   font-family: "Poppins", sans-serif;
   background: #fff;
   color: #000;
-  padding: 40px 80px;
+  padding: 0px 80px;
 }
-
-/* ==== IMAGE GRID ==== */
+/* ==== IMAGE GRID (Responsive + Figma accurate) ==== */
 .image-grid {
   display: grid;
   grid-template-columns: 451px 451px 361px;
-  grid-template-rows: 150px 150px;
+  grid-template-rows: 301px; /* single row, but right column will stack */
   gap: 0;
+  width: 100%;
+  max-width: 1263px;
+  margin: 0 auto;
 }
 
+/* Base image style */
 .img {
-  object-fit: cover;
+  display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
+/* Left Image (Image 1) */
 .img1 {
+  grid-column: 1;
+  grid-row: 1;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
+
+/* Middle Image (Image 2) */
 .img2 {
+  grid-column: 2;
+  grid-row: 1;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
-.img3 {
-  border-top-right-radius: 15px;
+
+/* Right column container — for stacking 3rd & 4th image */
+.image-grid {
+  position: relative;
 }
+
+/* Image 3 — top right */
+.img3 {
+  grid-column: 3;
+  grid-row: 1;
+  height: 50%; /* half of the left image */
+  border-top-right-radius: 15px;
+  object-fit: cover;
+}
+
+/* Image 4 — bottom right */
 .img4 {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: end; /* push to bottom of cell */
+  height: 50%; /* same as image3 */
   border-bottom-right-radius: 15px;
+  object-fit: cover;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Large tablets / small desktops (<= 1024px) */
+@media (max-width: 1024px) {
+  .image-grid {
+    grid-template-columns: 1fr 1fr 0.8fr;
+    max-width: 100%;
+  }
+}
+
+/* Tablets (<= 768px) */
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 10px;
+  }
+
+  .img1,
+  .img2,
+  .img3,
+  .img4 {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .img3,
+  .img4 {
+    height: auto;
+  }
+}
+
+/* Mobile (<= 480px) */
+@media (max-width: 480px) {
+  .image-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
 }
 
 /* ==== BUSINESS INFO ==== */
@@ -183,15 +260,15 @@
 }
 .catalogue-card p {
   color: #555;
-  font-size: 14px;
+  font-size: 10px;
   margin: 8px 0;
 }
 .catalogue-btns {
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
   margin-top: 10px;
 }
-.view-details,
+
 .enquire-now {
   background: none;
   border: 1px solid #8735BC;
@@ -239,16 +316,16 @@
 }
 
 /* ==== SERVICES GRID ==== */
-.services-grid {
+.services-grid2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
-.services-grid h4 {
+.services-grid2 h4 {
   font-size: 16px;
   color: #000;
 }
-.services-grid p {
+.services-grid2 p {
   color: #555;
   font-size: 14px;
 }
@@ -263,4 +340,236 @@
   padding: 12px 24px;
   font-weight: 600;
   cursor: pointer;
+}
+/* ==================== CONTACT SECTION ==================== */
+
+.contact-section {
+  margin-top: 70px;
+  padding: 40px 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.contact-title {
+  font-size: 35px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+}
+
+.show-number {
+  color: #8735BC;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.address-title {
+  margin-top: 25px;
+  font-weight: 600;
+  font-size: 30px;
+  color: #000;
+}
+
+.address-text {
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.address-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px 25px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.address-actions span,
+.address-actions a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.address-actions .link {
+  color: #8735BC;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.green-text {
+  color: #00B050;
+  font-weight: 500;
+}
+
+/* ALSO LISTED SECTION */
+.also-listed {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 25px;
+}
+
+.also-listed h4 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.listed-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.listed-btn {
+  border: none;
+  border-radius: 50px;
+  padding: 10px 25px;
+  background: #fff;
+  box-shadow: 2px 2px 5px #00000040, -2px -2px 4px #00000040;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #000;
+}
+
+.more-btn {
+  border: 2px solid #8735BC;
+  color: #8735BC;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 10px 25px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .address-text {
+    font-size: 16px;
+  }
+  .contact-title {
+    font-size: 28px;
+  }
+  .address-actions {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .listed-buttons {
+    gap: 10px;
+  }
+  .listed-btn {
+    font-size: 14px;
+  }
+}
+/* ==================== PHOTOS SECTION ==================== */
+
+.photos-section {
+  margin-top: 40px;
+}
+
+.photos-section h3 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  font-family: "Poppins", sans-serif;
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+/* ===== FIRST COLUMN (4 photos 2x2 grid) ===== */
+.photo-grid-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-4-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 340px;
+  height: 301px;
+}
+
+.photo-item {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.viewall {
+  position: relative;
+}
+
+.viewall .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+/* ===== OTHER COLUMNS ===== */
+.large-photo {
+  width: 340px;
+  height: 301px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.photo-caption {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  margin-top: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .photos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  .photo-4-grid,
+  .large-photo {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .photos-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .photo-4-grid {
+    width: 100%;
+  }
 }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { MapPin,Mic,Search } from 'lucide-react';
 import "../styles/about.css";
 import "../styles/leadership.css";
-import logo from "../assets/logo.png";
 import city1 from "../assets/city1.png";
 import city2 from "../assets/city2.png";
 import city3 from "../assets/city3.png";

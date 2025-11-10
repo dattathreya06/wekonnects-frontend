@@ -62,7 +62,10 @@ export default function Hero() {
           </div>
 
           {/* Third column (small narrow one) */}
-          <div className="hero-card blue-card"></div>
+          <div className="hero-card blue-card">
+               <h3>B2B</h3>
+            <p>Quick Quotes</p>
+          </div>
 
           {/* Fourth column */}
           <div className="hero-card blue-card">

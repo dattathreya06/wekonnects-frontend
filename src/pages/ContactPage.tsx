@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { LocateFixed, Mail, MapPin, Mic, PhoneCall, Search } from 'lucide-react';
+import {  Mail, MapPin, Mic, PhoneCall, Search } from 'lucide-react';
 import "../styles/about.css";
 
 import contactBanner from "../assets/contact.png"
-import { Building2, Users2, UserRound } from "lucide-react";
+
 
 
 const Contact: React.FC = () => {
@@ -79,7 +79,7 @@ Vasavi Pharma Complex, Gollapudi`, value: "Visit Us" },
       {/* === Stats Section === */}
         <div className="stats-grid">
           {stats.map((stat) => (
-            <div key={stat.id} className="stat-card">
+            <div key={stat.id} className="stat-card-contact">
                 <h3>{stat.value}</h3>
               <div className="stat-icon">{stat.icon}</div>
               

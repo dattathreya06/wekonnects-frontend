@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import {ChevronDown, Star, MapPin, Mic, Search, MessageCircle } from 'lucide-react';
 import "../styles/about.css";
 import "../styles/homenetworking.css";
-import logo from "../assets/logo.png";
+import massagebanner from "../assets/massage.png";
 import "../styles/businesscategories.css";
 import beauty1 from "../assets/beauty1.png";
 import beauty2 from "../assets/beauty2.png";
 import beauty3 from "../assets/beauty3.png";
+import whatsappicon from "../assets/icons/whatsappicon.png";
 
 const HomeCategories: React.FC = () => {
  
@@ -94,7 +95,7 @@ const HomeCategories: React.FC = () => {
       <section className="hero-banner-section">
         <div className="hero-banner-container">
           <img 
-            src={logo} 
+            src={massagebanner} 
             width="1278px"   
              height="246px"
             alt="We Konnects Community" 
@@ -160,7 +161,7 @@ const HomeCategories: React.FC = () => {
               <div className="buttons">
                 <button className="view-btn" onClick={() => window.location.href = '/business-details'}>View</button>
                 <button className="whatsapp-btn">
-                  <MessageCircle size={18} color="#25D366" />
+                  <img src={whatsappicon} alt="WhatsApp" width={28} height={28} />
                   WhatsApp
                 </button>
               </div>

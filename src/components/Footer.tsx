@@ -1,6 +1,8 @@
 import logo from "../assets/logo.png";
-import googleBadge from "../assets/google-play.jpg";
+import googleBadge from "../assets/google-play.png";
 import appBadge from "../assets/app-store.png";
+import secureIcon from "../assets/icons/secure-icon.png";
+import supportIcon from "../assets/icons/customer-support-icon.png";
 
 export default function Footer() {
   return (
@@ -13,7 +15,7 @@ export default function Footer() {
           <p className="footer-desc">
             Book appointments with the best Doctors and Specialists such as
             Gynecologists, Skin Specialists, Child Specialists, Surgeons, etc.
-            Avail test services such as MRI, CT scan, Ultrasound, X-Ray, etc.
+            Avail test services such as MRI, etc.
             and Online Doctor Video Consultations all across Pakistan
             conveniently.
           </p>
@@ -69,9 +71,10 @@ export default function Footer() {
           <div className="footer-support">
             <div className="footer-support-item">
               <div className="footer-support-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                   <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10zm1-14h-2v6h2zm0 8h-2v2h2z"/>
-                </svg>
+                </svg> */}
+                <img src={supportIcon} alt="Google Play" />
               </div>
               <div>
                 <h5>12/7 customer support</h5>
@@ -81,9 +84,10 @@ export default function Footer() {
 
             <div className="footer-support-item">
               <div className="footer-support-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                   <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm0 18a8 8 0 0 1-8-8 7.9 7.9 0 0 1 .2-1.7l6.3 6.3a1 1 0 0 0 1.4-1.4l-6.3-6.3A7.9 7.9 0 0 1 12 4a8 8 0 0 1 0 16Z"/>
-                </svg>
+                </svg> */}
+                <img src={secureIcon} alt="Google Play" />
               </div>
               <div>
                 <h5>Secure online payment</h5>
