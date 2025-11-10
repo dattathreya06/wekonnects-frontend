@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ChevronDown, Star, MapPin, Mic, Search, MessageCircle } from 'lucide-react';
+import {ChevronDown, Star, MapPin, Mic, Search} from 'lucide-react';
 import "../styles/about.css";
 import "../styles/homenetworking.css";
 import massagebanner from "../assets/massage.png";
@@ -13,9 +13,7 @@ const HomeCategories: React.FC = () => {
  
   const [location, setLocation] = useState("");
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("Top Rated");
-  const [style, setStyle] = useState("All Styles");
-  const [service, setService] = useState("All Services");
+  
   const [openNow, setOpenNow] = useState(false);
 
   const businesses = [
