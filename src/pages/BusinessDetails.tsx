@@ -2,17 +2,11 @@ import { useState } from "react";
 import "../styles/businessDetails.css";
 import {
   MapPin,
-  MessageCircle,
   Mic,
   Search,
-  Phone,
-  Mail,
-  Copy,
   Share2,
   Star,
   Link,
-  Clock,
-  Plus,
   Edit3,
 } from "lucide-react";
 import whatsappicon from "../assets/icons/whatsappicon.png"
@@ -52,12 +46,7 @@ export default function BusinessDetails() {
     "Skin Care Clinics",
     "Mehendi Arts",
   ];
-    const photos = [
-    img1,
-    img2,
-    img3,
-    img4,
-  ];
+
     const [location, setLocation] = useState("");
     const [search, setSearch] = useState("");
 
