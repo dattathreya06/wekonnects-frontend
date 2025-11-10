@@ -13,6 +13,7 @@ const HomeCategories: React.FC = () => {
  
   const [location, setLocation] = useState("");
   const [search, setSearch] = useState("");
+  const [sortBy, ] = useState("Top Rated");
   
   const [openNow, setOpenNow] = useState(false);
 
