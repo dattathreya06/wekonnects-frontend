@@ -11,7 +11,7 @@ const DashboardLayout: React.FC = () => {
       <div className="layout-content">
         <AdminSidebar />
         <main className="dashboard-main">
-          <Outlet /> {/* ✅ All admin child routes will render here */}
+          <Outlet /> 
         </main>
       </div>
     </div>

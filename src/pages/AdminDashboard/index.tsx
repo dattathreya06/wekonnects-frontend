@@ -27,40 +27,40 @@ const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* ======= DASHBOARD STATS ======= */}
-      <div className="stats-grid">
-        <div className="stat-card">
-          <FileText className="stat-icon" color="#F58220" />
-          <div>
-            <h2>25</h2>
-            <p>Total Inquiries</p>
-          </div>
-        </div>
+   {/* ======= DASHBOARD STATS ======= */}
+<div className="stats-grid">
+  <div className="stat-card">
+    <FileText className="stat-icon" color="#F58220" size={48} />
+    <div>
+      <h2>25</h2>
+      <p>Total Inquiries</p>
+    </div>
+  </div>
 
-        <div className="stat-card">
-          <Briefcase className="stat-icon" color="#F58220" />
-          <div>
-            <h2>29</h2>
-            <p>Apply Jobs</p>
-          </div>
-        </div>
+  <div className="stat-card">
+    <Briefcase className="stat-icon" color="#F58220" size={48} />
+    <div>
+      <h2>29</h2>
+      <p>Apply Jobs</p>
+    </div>
+  </div>
 
-        <div className="stat-card">
-          <Megaphone className="stat-icon" color="#F58220" />
-          <div>
-            <h2>12,000</h2>
-            <p>Post Jobs</p>
-          </div>
-        </div>
+  <div className="stat-card">
+    <Megaphone className="stat-icon" color="#F58220" size={48} />
+    <div>
+      <h2>12,000</h2>
+      <p>Post Jobs</p>
+    </div>
+  </div>
 
-        <div className="stat-card">
-          <Users className="stat-icon" color="#F58220" />
-          <div>
-            <h2>1,75,458</h2>
-            <p>Leads</p>
-          </div>
-        </div>
-      </div>
+  <div className="stat-card">
+    <Users className="stat-icon" color="#F58220" size={48} />
+    <div>
+      <h2>1,75,458</h2>
+      <p>Leads</p>
+    </div>
+  </div>
+</div>
     </div>
   );
 };

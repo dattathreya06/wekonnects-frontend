@@ -18,6 +18,9 @@ import BusinessDetails from "./pages/BusinessDetails";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import DashboardPage from "./pages/AdminDashboard";
 import EducationInfo from "./pages/AdminDashboard/EducationInfo";
+import ApplyJobsList from "./pages/AdminDashboard/ApplyJobList";
+import CreateProfile from "./pages/AdminDashboard/CreateProfile";
+import PostJob from "./pages/AdminDashboard/PostJob";
 
 function Layout() {
   const location = useLocation();
@@ -62,6 +65,9 @@ function Layout() {
           <Route path="/admin" element={<DashboardLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="jobs/education" element={<EducationInfo />} />
+            <Route path="jobs/apply-list" element={<ApplyJobsList />} />
+            <Route path="jobs/profile" element={<CreateProfile />} />
+            <Route path="jobs/post" element={<PostJob />} />
           </Route>
         </Routes>
       </main>

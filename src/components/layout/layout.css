@@ -196,7 +196,7 @@
 
 /* ================== DASHBOARD PAGE ================== */
 .dashboard-home {
-  background: #f9f9f9;
+  background: #ffffff;
   padding: 2rem;
 }
 
@@ -258,44 +258,67 @@
 /* ===== STATS GRID ===== */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1.5rem;
+  padding: 1rem; /* optional: adds breathing space */
 }
 
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 2px 2px 5px #00000025;
-  padding: 1.5rem;
-  transition: transform 0.2s;
-}
+  gap: 0.2rem;
 
-.stat-card:hover {
-  transform: translateY(-2px);
+  /* Nice card styling */
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0px 12px 23px 0px rgba(62, 73, 84, 0.04);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Optional hover effect */
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 20px 35px 0px rgba(62, 73, 84, 0.1);
+  }
 }
 
 .stat-icon {
-  background-color: #fff4e6;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px;
+  background-color: #FFF0E5; /* Light orange background for icon */
+  border-radius: 12px;
+  flex-shrink: 0;
 }
 
 .stat-card h2 {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   margin: 0;
-  color: #000;
+  color: #1a1a1a;
+  line-height: 1;
 }
 
 .stat-card p {
-  font-size: 15px;
-  color: #666;
-  margin: 0;
+  font-size: 0.95rem;
+  color: #666666;
+  margin: 4px 0 0;
+  font-weight: 500;
 }
 
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1.2rem;
+  }
+  
+  .stat-card h2 {
+    font-size: 1.7rem;
+  }
+}
 /* ================== FORMS (Education Page) ================== */
 .dashboard-content {
 
@@ -445,5 +468,377 @@
   .stat-card {
     flex-direction: column;
     text-align: center;
+  }
+}
+/* ================= APPLY JOBS LIST PAGE ================= */
+.applyjobs-table {
+  width: 100%;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  padding: 1rem 1.5rem;
+}
+
+.applyjobs-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Poppins", sans-serif;
+}
+
+.applyjobs-table th {
+  text-align: left;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000;
+  border-bottom: 2px solid #e5e5e5;
+  background: #fff;
+}
+
+.applyjobs-table td {
+  padding: 1rem;
+  font-size: 15px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.applyjobs-table tbody tr:hover {
+  background-color: #faf8ff;
+}
+
+.selected-row {
+  border: 2px solid #8735bc;
+  background-color: #fdfcff;
+  color: #8735bc;
+  font-weight: 600;
+}
+
+.selected-row td {
+  color: #8735bc;
+}
+
+.view-icon {
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+}
+
+/* ===== Pagination ===== */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.pagination-btn {
+  background-color: #0622af;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s;
+  box-shadow: 0 2px 5px #00000040;
+}
+
+.pagination-btn.prev {
+  background-color: #0622af;
+}
+
+.pagination-btn.next {
+  background-color: #0622af;
+}
+
+.pagination-btn:hover {
+  background-color: #041c8c;
+}
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #000;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: -1px 1px 4px #00000040, 1px -1px 4px #00000040;
+  transition: 0.3s;
+}
+
+.page-num.active {
+  background-color: #ff6c00;
+  color: #fff;
+  border: none;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #333;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+/* ================= CREATE PROFILE PAGE ================= */
+
+.create-profile-card {
+ 
+  height: 600px;
+  background: #ffffff;
+  border-radius: 4px;
+  margin-top: 1.5rem;
+  padding: 2rem 2.5rem;
+  box-shadow: -2px 2px 4px 0px #00000040, 2px -2px 4px 0px #00000040;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.create-profile-card .form-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.create-profile-card .form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.create-profile-card .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-profile-card label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #2b2b2b;
+  margin-bottom: 8px;
+}
+
+.create-profile-card input {
+  width: 100%;
+  height: 50px;
+  border-radius: 4px;
+  border: 1px solid #ff00004f;
+  box-shadow: -1px 1px 4px 0px #00000040;
+  padding: 0 1rem;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  outline: none;
+}
+
+.create-profile-card input::placeholder {
+  color: #777;
+}
+
+.create-profile-card input:focus {
+  border-color: #8735bc;
+}
+
+.save-edit-btn {
+  background-color: #0622af;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  box-shadow: -2px 2px 4px 0px #00000040;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  align-self: flex-end;
+  transition: background 0.3s;
+}
+
+.save-edit-btn:hover {
+  background-color: #041a8a;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .create-profile-card {
+    width: 100%;
+    height: auto;
+  }
+  .create-profile-card .form-row {
+    flex-direction: column;
+  }
+  .save-edit-btn {
+    align-self: center;
+  }
+}
+
+/* ================= POST JOB PAGE ================= */
+.postjob-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: -2px 2px 4px 0px #00000040, 2px -2px 4px 0px #00000040;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.postjob-card .form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.postjob-card .form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.postjob-card .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.postjob-card label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #2b2b2b;
+  margin-bottom: 8px;
+}
+
+.postjob-card input,
+.postjob-card select {
+  width: 100%;
+  height: 50px;
+  border-radius: 4px;
+  border: 1px solid #ff00004f;
+  box-shadow: -1px 1px 4px 0px #00000040;
+  padding: 0 1rem;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  outline: none;
+}
+
+.postjob-card input:focus,
+.postjob-card select:focus {
+  border-color: #8735bc;
+}
+
+/* ===== Description & Sections ===== */
+.postjob-section {
+  margin-bottom: 2rem;
+}
+
+.postjob-section label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #2b2b2b;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.postjob-section textarea {
+  width: 100%;
+  height: 140px;
+  border-radius: 4px;
+  border: 1px solid #ff00004f;
+  box-shadow: -1px 1px 4px 0px #00000040;
+  padding: 1rem;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  resize: none;
+  outline: none;
+}
+
+.postjob-section input {
+  width: 100%;
+  height: 50px;
+  border-radius: 4px;
+  border: 1px solid #ff00004f;
+  box-shadow: -1px 1px 4px 0px #00000040;
+  padding: 0 1rem;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  outline: none;
+}
+
+.label-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.add-btn {
+  background: transparent;
+  border: 2px solid #0622af;
+  color: #0622af;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  background: #0622af;
+  color: white;
+}
+
+.save-edit-btn {
+  background-color: #0622af;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  box-shadow: -2px 2px 4px 0px #00000040;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  align-self: flex-end;
+  transition: background 0.3s;
+  float: right;
+}
+
+.save-edit-btn:hover {
+  background-color: #041a8a;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+  .postjob-card .form-row {
+    flex-direction: column;
+  }
+
+  .save-edit-btn {
+    float: none;
+    margin-top: 1rem;
+    align-self: center;
   }
 }
