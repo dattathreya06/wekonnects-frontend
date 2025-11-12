@@ -24,9 +24,9 @@ const AdminHeader: React.FC = () => {
       {/* ===== RIGHT SECTION: Icons + Profile ===== */}
       <div className="header-right">
         <div className="header-icons">
-          <Bell className="icon" />
-          <MessageSquare className="icon" />
-          <Settings className="icon" />
+          <Bell className="icon" size={54} />
+          <MessageSquare className="icon" size={54}/>
+          <Settings className="icon"  size={54}/>
         </div>
 
         <div className="admin-profile">

@@ -21,6 +21,12 @@ import EducationInfo from "./pages/AdminDashboard/EducationInfo";
 import ApplyJobsList from "./pages/AdminDashboard/ApplyJobList";
 import CreateProfile from "./pages/AdminDashboard/CreateProfile";
 import PostJob from "./pages/AdminDashboard/PostJob";
+import UsersList from "./pages/AdminDashboard/UsersList";
+import CategoriesList from "./pages/AdminDashboard/CategoriesList";
+import AddCategory from "./pages/AdminDashboard/AddCategory";
+import BusinessList from "./pages/AdminDashboard/BusinessList";
+import AddBusiness from "./pages/AdminDashboard/AddBusiness";
+import CreateEvent from "./pages/AdminDashboard/CreateEvent";
 
 function Layout() {
   const location = useLocation();
@@ -68,6 +74,14 @@ function Layout() {
             <Route path="jobs/apply-list" element={<ApplyJobsList />} />
             <Route path="jobs/profile" element={<CreateProfile />} />
             <Route path="jobs/post" element={<PostJob />} />
+            <Route path="users" element={<UsersList />} />
+            <Route path="categories" element={<CategoriesList />} />
+            <Route path="categories/add" element={<AddCategory />} />
+            <Route path="business/add" element={<AddBusiness/>} />
+            <Route path="business/list" element={<BusinessList />} />
+            <Route path="business/expire-listings" element={<BusinessList />} />
+            <Route path="events/create-event" element={<CreateEvent />} />
+            <Route path="events/list" element={<CreateEvent />} />
           </Route>
         </Routes>
       </main>

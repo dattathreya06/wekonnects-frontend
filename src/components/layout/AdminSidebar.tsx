@@ -8,6 +8,8 @@ import {
   Users,
   HelpCircle,
   ChevronDown,
+  Users2,
+  LucideBriefcaseBusiness,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -39,28 +41,73 @@ const AdminSidebar: React.FC = () => {
           <LayoutDashboard size={20} />
           <span>Dashboard</span>
         </NavLink>
+        <NavLink
+          to="/admin/users"
+          className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+        >
+          <Users2 size={20} />
+          <span>Users</span>
+        </NavLink>
+         <NavLink
+          to="/admin/categories"
+          className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+        >
+          <LucideBriefcaseBusiness size={20} />
+          <span>Categories</span>
+        </NavLink>
 
         {/* ===== Business ===== */}
         <div className="nav-group">
           <div className="nav-item" onClick={() => toggleMenu("Business")}>
             <Briefcase size={20} />
-            <span>Business</span>
+            <span>Business Listing </span>
             <ChevronDown className="chevron" />
           </div>
 
           {openMenus.includes("Business") && (
             <div className="sub-menu">
               <NavLink
-                to="/admin/business/info"
+                to="/admin/business/add"
                 className={({ isActive }) => (isActive ? "sub-active" : "")}
               >
-                Business Info
+                Add New
               </NavLink>
               <NavLink
                 to="/admin/business/list"
                 className={({ isActive }) => (isActive ? "sub-active" : "")}
               >
                 Business List
+              </NavLink>
+               <NavLink
+                to="/admin/business/expire-listings"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+                Expire Listings
+              </NavLink>
+            </div>
+          )}
+        </div>
+
+          <div className="nav-group">
+                  <div className="nav-item" onClick={() => toggleMenu("Jobs")}>
+                    <Megaphone size={20} />
+                    <span>Events</span>
+                    <ChevronDown className="chevron" />
+          </div>
+
+          {openMenus.includes("Jobs") && (
+            <div className="sub-menu">
+              <NavLink
+                to="/admin/events/create-event"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+             Create Event
+              </NavLink>
+              <NavLink
+                to="/admin/events/list"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+                Event List
               </NavLink>
             </div>
           )}
