@@ -27,6 +27,13 @@ import AddCategory from "./pages/AdminDashboard/AddCategory";
 import BusinessList from "./pages/AdminDashboard/BusinessList";
 import AddBusiness from "./pages/AdminDashboard/AddBusiness";
 import CreateEvent from "./pages/AdminDashboard/CreateEvent";
+import CreateGroup from "./pages/AdminDashboard/CreateGroup";
+import GroupInformation from "./pages/AdminDashboard/GroupInformation";
+import CreateState from "./pages/AdminDashboard/CreateState";
+import StatesList from "./pages/AdminDashboard/StatesList";
+import CreateCity from "./pages/AdminDashboard/CreateCity";
+import CitiesList from "./pages/AdminDashboard/CityList";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 function Layout() {
   const location = useLocation();
@@ -68,7 +75,16 @@ function Layout() {
           <Route path="/signup" element={<SignupPage />} />
 
           {/* ====== ADMIN PAGES (nested inside DashboardLayout) ====== */}
-          <Route path="/admin" element={<DashboardLayout />}>
+          {/* <Route path="/admin" element={<DashboardLayout />}> */}
+                    <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="jobs/education" element={<EducationInfo />} />
             <Route path="jobs/apply-list" element={<ApplyJobsList />} />
@@ -77,11 +93,17 @@ function Layout() {
             <Route path="users" element={<UsersList />} />
             <Route path="categories" element={<CategoriesList />} />
             <Route path="categories/add" element={<AddCategory />} />
+            <Route path="groups/create-group" element={<CreateGroup />} />
+            <Route path="groups/info" element={<GroupInformation />} />
             <Route path="business/add" element={<AddBusiness/>} />
             <Route path="business/list" element={<BusinessList />} />
             <Route path="business/expire-listings" element={<BusinessList />} />
             <Route path="events/create-event" element={<CreateEvent />} />
             <Route path="events/list" element={<CreateEvent />} />
+            <Route path="locations/create-states" element={<CreateState />} />
+            <Route path="locations/states-list" element={<StatesList />} />
+            <Route path="locations/create-cities" element={<CreateCity />} />
+            <Route path="locations/cities-list" element={<CitiesList />} />
           </Route>
         </Routes>
       </main>

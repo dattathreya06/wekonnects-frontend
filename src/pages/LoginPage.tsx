@@ -1,19 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 import logo from "../assets/logo.png";
 import { useState } from "react";
+import { loginUser } from "../api/api";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   // Form state
   const [formData, setFormData] = useState({
-    phone: "",
+    email: "",     // ← Now using email
     password: "",
+    // phone: "",  // ← Commented out for now
   });
 
   // Error state
   const [errors, setErrors] = useState({
-    phone: "",
+    email: "",
     password: "",
+    // phone: "",  // ← Commented out
   });
 
   // Handle input change
@@ -21,7 +26,7 @@ export default function LoginPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error on typing
+    // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -30,15 +35,15 @@ export default function LoginPage() {
   // Validation logic
   const validateForm = () => {
     let isValid = true;
-    const newErrors = { phone: "", password: "" };
+    const newErrors = { email: "", password: "" };
 
-    // Phone validation (Indian mobile number: +91 followed by 10 digits)
-    const phoneRegex = /^\+91[6-9]\d{9}$/;
-    if (!formData.phone) {
-      newErrors.phone = "Phone number is required";
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      newErrors.email = "Email is required";
       isValid = false;
-    } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Enter valid Indian number (+91 followed by 10 digits)";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
       isValid = false;
     }
 
@@ -56,11 +61,29 @@ export default function LoginPage() {
   };
 
   // Handle form submit
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
-      console.log("Login successful with:", formData);
-      // Proceed with login API call
+      try {
+        const res = await loginUser({
+          email: formData.email,        // ← Sending email
+          password: formData.password,
+        });
+
+        const token = res.data?.data?.accessToken;
+
+        if (token) {
+          localStorage.setItem("token", token);
+          navigate("/admin/dashboard");
+        }
+      } catch (error: any) {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "Login failed. Please try again.";
+        alert(message);
+      }
     }
   };
 
@@ -81,22 +104,24 @@ export default function LoginPage() {
             <h2 className="auth-title">Login to your Account</h2>
 
             <form className="auth-form" onSubmit={handleSubmit}>
-              <label>Phone Number</label>
+              {/* Email Field */}
+              <label>Email Address</label>
               <input
-                type="text"
-                name="phone"
-                placeholder="Enter your phone number"
-                value={formData.phone}
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={formData.email}
                 onChange={handleChange}
-                className={errors.phone ? "input-error" : ""}
+                className={errors.email ? "input-error" : ""}
               />
-              {errors.phone && <span className="error-text">{errors.phone}</span>}
+              {errors.email && <span className="error-text">{errors.email}</span>}
 
+              {/* Password Field */}
               <label>Password</label>
               <input
                 type="password"
                 name="password"
-                placeholder="Enter your Password"
+                placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
                 className={errors.password ? "input-error" : ""}

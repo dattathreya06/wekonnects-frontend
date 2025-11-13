@@ -1,41 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../components/layout/layout.css";
 import { MoreVertical } from "lucide-react";
+import { getAllUsers, updateUserStatus } from "../../api/api";  // ⬅ API IMPORT
 
 interface UserData {
-  id: string;
-  date: string;
-  FullName: string;
-  phoneno: string;
-  city: string;
+  _id: string;
+  createdAt: string;
+  name: string;
+  phone: string;
+  city?: string;
+  status?: string;
 }
 
 const UsersList: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(3);
-  const [toggleStates, setToggleStates] = useState<boolean[]>(
-    new Array(10).fill(true)
-  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const [users, setUsers] = useState<UserData[]>([]);
+  const [toggleStates, setToggleStates] = useState<boolean[]>([]);
 
-  const toggleStatus = (index: number) => {
+  // ========================
+  // FETCH USERS FROM API
+  // ========================
+  const fetchUsers = async () => {
+    try {
+      const res = await getAllUsers();
+      const list = res.data?.data || [];
+
+      setUsers(list);
+      setToggleStates(list.map((u: UserData) => u.status === "active"));
+    } catch (error) {
+      console.error("Failed to load users:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  // ========================
+  // TOGGLE USER STATUS
+  // ========================
+  const toggleStatus = async (index: number, userId: string) => {
+    const newStatus = !toggleStates[index];
+
+    try {
+      await updateUserStatus(userId, {
+        status: newStatus ? "active" : "inactive",
+      });
+    } catch (err) {
+      console.error("Failed to update status", err);
+    }
+
     setToggleStates((prev) => {
       const updated = [...prev];
-      updated[index] = !updated[index];
+      updated[index] = newStatus;
       return updated;
     });
   };
-
-  const users: UserData[] = [
-    { id: "#004562", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#004562", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00456", date: "26 March 2024, 01:42 PM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00456", date: "26 March 2024, 01:42 PM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#004561", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00451", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00451", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00459", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00458", date: "26 March 2024, 12:42 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-    { id: "#00457", date: "26 March 2024, 02:12 AM", FullName: "Harikrishna", phoneno: "9999999999", city: "Vijayawada" },
-  ];
 
   return (
     <div className="dashboard-content">
@@ -54,22 +74,25 @@ const UsersList: React.FC = () => {
               <th>View</th>
             </tr>
           </thead>
+
           <tbody>
             {users.map((user, index) => (
-              <tr key={user.id + index} className={""}>
-                <td>{user.id}</td>
-                <td>{user.date}</td>
-                <td>{user.FullName}</td>
-                <td>{user.phoneno}</td>
-                <td>{user.city}</td>
+              <tr key={user._id}>
+                <td>{user._id.slice(-6)}</td>
+                <td>{new Date(user.createdAt).toLocaleString()}</td>
+                <td>{user.name || "—"}</td>
+                <td>{user.phone}</td>
+                <td>{user.city || "—"}</td>
+
                 <td>
                   <div
                     className={`toggle-switch ${toggleStates[index] ? "on" : ""}`}
-                    onClick={() => toggleStatus(index)}
+                    onClick={() => toggleStatus(index, user._id)}
                   >
                     <div className="toggle-circle"></div>
                   </div>
                 </td>
+
                 <td className="view-icon">
                   <MoreVertical size={18} />
                 </td>
@@ -78,7 +101,7 @@ const UsersList: React.FC = () => {
           </tbody>
         </table>
 
-        {/* ===== PAGINATION ===== */}
+        {/* Pagination */}
         <div className="pagination-container">
           <button className="pagination-btn prev">⟪ Previous</button>
           <div className="pagination-numbers">
@@ -94,7 +117,7 @@ const UsersList: React.FC = () => {
           </div>
           <button className="pagination-btn next">Next ⟫</button>
         </div>
-        <p className="pagination-info">Showing 10 from 46 data</p>
+        <p className="pagination-info">Showing {users.length} users</p>
       </div>
     </div>
   );

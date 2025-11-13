@@ -1,10 +1,13 @@
 import "../styles/auth.css";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { registerUser } from "../api/api";
 
 export default function SignupPage() {
-  // Form state
+  const navigate = useNavigate();
+
+  // ==== Form State ====
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -14,7 +17,7 @@ export default function SignupPage() {
     referral: "",
   });
 
-  // Error state
+  // ==== Error State ====
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
@@ -23,21 +26,24 @@ export default function SignupPage() {
     confirmPassword: "",
   });
 
-  // Handle input change
+  // ==== Loading State ====
+  const [isLoading, setIsLoading] = useState(false);
+
+  // ==== Handle Input Change ====
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error on typing
+    // Clear error when user types
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
-  // Validation logic
-  const validateForm = () => {
+  // ==== Validation ====
+  const validateForm = (): boolean => {
     let isValid = true;
-    const newErrors = {
+    const newErrors: typeof errors = {
       name: "",
       phone: "",
       email: "",
@@ -45,7 +51,7 @@ export default function SignupPage() {
       confirmPassword: "",
     };
 
-    // Name validation
+    // Name
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
       isValid = false;
@@ -54,7 +60,7 @@ export default function SignupPage() {
       isValid = false;
     }
 
-    // Phone validation (Indian mobile number)
+    // Phone (Indian format)
     const phoneRegex = /^\+91[6-9]\d{9}$/;
     if (!formData.phone) {
       newErrors.phone = "Phone number is required";
@@ -64,7 +70,7 @@ export default function SignupPage() {
       isValid = false;
     }
 
-    // Email validation
+    // Email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email) {
       newErrors.email = "Email is required";
@@ -74,7 +80,7 @@ export default function SignupPage() {
       isValid = false;
     }
 
-    // Password validation
+    // Password
     if (!formData.password) {
       newErrors.password = "Password is required";
       isValid = false;
@@ -96,12 +102,34 @@ export default function SignupPage() {
     return isValid;
   };
 
-  // Handle form submit
-  const handleSubmit = (e: React.FormEvent) => {
+  // ==== Handle Submit ====
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Form is valid, sending OTP...", formData);
-      // Proceed with OTP logic
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+
+    try {
+      await registerUser({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        password: formData.password,
+        phone: formData.phone,
+        referralCode: formData.referral || undefined, // optional
+        role: "user",
+      });
+
+      alert("Registration successful! Please log in.");
+      navigate("/login");
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Signup failed. Please try again.";
+      alert(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,79 +147,103 @@ export default function SignupPage() {
         <div className="auth-right">
           <div className="auth-box">
             <h4 className="welcome-text">Welcome to We Konnects</h4>
-            <h2 className="auth-title">Sign Up</h2>
+            <h2 className="auth-title">Create Your Account</h2>
 
             <form className="auth-form" onSubmit={handleSubmit}>
+              {/* Name */}
               <label>Name</label>
               <input
                 type="text"
                 name="name"
-                placeholder="Enter your Name"
+                placeholder="Enter your name"
                 value={formData.name}
                 onChange={handleChange}
                 className={errors.name ? "input-error" : ""}
+                disabled={isLoading}
               />
               {errors.name && <span className="error-text">{errors.name}</span>}
 
+              {/* Phone */}
               <label>Phone Number</label>
               <input
                 type="text"
                 name="phone"
-                placeholder="+91 9898989898"
+                placeholder="+91 9876543210"
                 value={formData.phone}
                 onChange={handleChange}
                 className={errors.phone ? "input-error" : ""}
+                disabled={isLoading}
               />
               {errors.phone && <span className="error-text">{errors.phone}</span>}
 
-              <label>Mail ID</label>
+              {/* Email */}
+              <label>Email Address</label>
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your Mail Id"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
                 className={errors.email ? "input-error" : ""}
+                disabled={isLoading}
               />
               {errors.email && <span className="error-text">{errors.email}</span>}
 
+              {/* Password */}
               <label>Password</label>
               <input
                 type="password"
                 name="password"
-                placeholder="Enter your Password"
+                placeholder="Create a password"
                 value={formData.password}
                 onChange={handleChange}
                 className={errors.password ? "input-error" : ""}
+                disabled={isLoading}
               />
               {errors.password && <span className="error-text">{errors.password}</span>}
 
-              <label>Re-Enter Password</label>
+              {/* Confirm Password */}
+              <label>Confirm Password</label>
               <input
                 type="password"
                 name="confirmPassword"
-                placeholder="Re-Enter your Password"
+                placeholder="Re-enter password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className={errors.confirmPassword ? "input-error" : ""}
+                disabled={isLoading}
               />
               {errors.confirmPassword && (
                 <span className="error-text">{errors.confirmPassword}</span>
               )}
 
-              <label>Enter Referral Code</label>
+              {/* Referral (Optional) */}
+              <label>Referral Code (Optional)</label>
               <input
                 type="text"
                 name="referral"
-                placeholder="Enter your Referral Code"
+                placeholder="Enter referral code"
                 value={formData.referral}
                 onChange={handleChange}
+                disabled={isLoading}
               />
 
-              <button type="submit" className="auth-btn">
-                Send OTP
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="auth-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? "Creating Account..." : "Sign Up"}
               </button>
             </form>
+
+            <p className="auth-footer">
+              Already have an account?{" "}
+              <Link to="/login" className="auth-link">
+                Login Here
+              </Link>
+            </p>
           </div>
         </div>
       </div>

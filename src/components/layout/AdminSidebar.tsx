@@ -10,13 +10,22 @@ import {
   ChevronDown,
   Users2,
   LucideBriefcaseBusiness,
+  GroupIcon,
+  Users2Icon,
+  LocateIcon,
+  LocateFixedIcon,
+  MapIcon,
+  LocateOffIcon,
+  PinIcon,
+  LogOut
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { logoutUser } from "../../api/api";
 
 const AdminSidebar: React.FC = () => {
   const [openMenus, setOpenMenus] = useState<string[]>(["Jobs"]);
-
+  const navigate = useNavigate();
   const toggleMenu = (menu: string) => {
     setOpenMenus((prev) =>
       prev.includes(menu)
@@ -24,6 +33,17 @@ const AdminSidebar: React.FC = () => {
         : [...prev, menu]
     );
   };
+   const handleLogout = async () => {
+    try {
+      await logoutUser(); // backend call
+      localStorage.removeItem("token");  // Remove token
+      navigate("/login");               // Redirect to login
+    } catch (err) {
+      console.error("Logout failed:", err);
+      alert("Error logging out");
+    }
+  };
+
 
   return (
     <aside className="admin-sidebar">
@@ -55,6 +75,67 @@ const AdminSidebar: React.FC = () => {
           <LucideBriefcaseBusiness size={20} />
           <span>Categories</span>
         </NavLink>
+        <div className="nav-group">
+                  <div className="nav-item" onClick={() => toggleMenu("groups")}>
+                    <Users2Icon size={20} />
+                    <span>Groups</span>
+                    <ChevronDown className="chevron" />
+          </div>
+
+          {openMenus.includes("groups") && (
+            <div className="sub-menu">
+              <NavLink
+                to="/admin/groups/create-group"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+             Create Group
+              </NavLink>
+              <NavLink
+                to="/admin/groups/info"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+                Groups Information
+              </NavLink>
+            </div>
+          )}
+        </div>
+
+        <div className="nav-group">
+                  <div className="nav-item" onClick={() => toggleMenu("locations")}>
+                    <PinIcon size={20} />
+                    <span>Locations</span>
+                    <ChevronDown className="chevron" />
+          </div>
+
+          {openMenus.includes("locations") && (
+            <div className="sub-menu">
+              <NavLink
+                to="/admin/locations/create-states"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+             Create State
+              </NavLink>
+              <NavLink
+                to="/admin/locations/states-list"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+               States List
+              </NavLink>
+               <NavLink
+                to="/admin/locations/create-cities"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+             Create City
+              </NavLink>
+              <NavLink
+                to="/admin/locations/cities-list"
+                className={({ isActive }) => (isActive ? "sub-active" : "")}
+              >
+               Cities List
+              </NavLink>
+            </div>
+          )}
+        </div>
 
         {/* ===== Business ===== */}
         <div className="nav-group">
@@ -88,14 +169,15 @@ const AdminSidebar: React.FC = () => {
           )}
         </div>
 
+
           <div className="nav-group">
-                  <div className="nav-item" onClick={() => toggleMenu("Jobs")}>
+                  <div className="nav-item" onClick={() => toggleMenu("events")}>
                     <Megaphone size={20} />
                     <span>Events</span>
                     <ChevronDown className="chevron" />
           </div>
 
-          {openMenus.includes("Jobs") && (
+          {openMenus.includes("events") && (
             <div className="sub-menu">
               <NavLink
                 to="/admin/events/create-event"
@@ -211,6 +293,13 @@ const AdminSidebar: React.FC = () => {
           )}
         </div>
       </nav>
+      {/* LOGOUT BUTTON */}
+      <div className="logout-section">
+        <button className="logout-btn" onClick={handleLogout}>
+          <LogOut size={20} />
+          <span>Logout</span>
+        </button>
+      </div>
     </aside>
   );
 };
