@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../components/layout/layout.css";
-import { ChevronUp, ChevronDown, Edit } from "lucide-react";
+import { Edit } from "lucide-react";
 
 interface GroupData {
   id: number;

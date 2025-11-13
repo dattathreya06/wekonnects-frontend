@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../components/layout/layout.css";
 import ferrariLogo from "../../assets/icons/ferari.png";
-import { Edit } from "lucide-react";
+
 
 interface Business {
   id: number;
