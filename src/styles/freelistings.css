@@ -1,0 +1,223 @@
+.free-main {
+  width: 100%;
+  padding-bottom: 50px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ------------ HERO SECTION ------------ */
+.hero-section {
+  text-align: center;
+  padding: 50px 10px;
+  background: #f5f7fb;
+}
+
+.hero-title {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.hero-title .highlight {
+  color: #ff7a00;
+}
+
+.hero-subtext {
+  max-width: 650px;
+  margin: 10px auto;
+  color: #555;
+  font-size: 15px;
+}
+
+.search-box {
+  display: flex;
+  background: #fff;
+  padding: 18px;
+  border-radius: 40px;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: 30px auto;
+  box-shadow: 0px 4px 12px #00000010;
+  gap: 15px;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  background: #fafafa;
+  padding: 12px 15px;
+  border-radius: 12px;
+}
+
+.search-item input,
+.search-item select {
+  width: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-btn {
+  background: #8735BC;
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.popular-searches {
+  margin-top: 10px;
+}
+
+.popular-searches span {
+  color: #8735BC;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/* ------------ CATEGORY SECTION ------------ */
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 40px 0;
+}
+
+.purple {
+  color: #8735BC;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  width: 85%;
+  margin: auto;
+}
+
+.category-card {
+  padding: 25px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0px 4px 12px #00000010;
+  text-align: left;
+  position: relative;
+}
+
+.category-card .cat-icon {
+  margin-bottom: 10px;
+}
+
+.category-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.category-card p {
+  color: gray;
+  font-size: 13px;
+}
+
+.cat-arrow {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  color: #8735BC;
+}
+
+.all-categories {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #8735BC;
+}
+
+/* ------------ HOT JOBS ------------ */
+.hot-section {
+  margin-top: 50px;
+}
+
+.hot-filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hot-filter-btn {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+  background: #fff;
+}
+
+.hot-filter-btn.active {
+  background: #8735BC;
+  color: #fff;
+  border-color: #8735BC;
+}
+
+.jobs-grid {
+  width: 85%;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.job-card {
+  padding: 22px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0px 4px 12px #00000010;
+}
+
+.job-top {
+  text-align: right;
+}
+
+.job-type {
+  background: #f3e8ff;
+  color: #8735BC;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.job-company {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.job-role {
+  color: #333;
+  font-weight: 500;
+}
+
+.job-desc {
+  font-size: 13px;
+  color: #666;
+  margin: 10px 0 15px 0;
+}
+
+.job-meta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #555;
+}

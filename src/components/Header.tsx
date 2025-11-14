@@ -82,10 +82,10 @@ export default function Header() {
             Business
           </Link>
 
-          <ScrollLink to="#free-listing" className="nav-item nav-free">
+          <Link className="nav-item nav-free" to="/free-listing">
             <span className="free-pill">BUSINESS</span>
             <IconGrowth /> Free Listing
-          </ScrollLink>
+          </Link>
 
           <button className="notify-btn" aria-label="Notifications">
             <IconBell />

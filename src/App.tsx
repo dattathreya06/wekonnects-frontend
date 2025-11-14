@@ -34,6 +34,7 @@ import StatesList from "./pages/AdminDashboard/StatesList";
 import CreateCity from "./pages/AdminDashboard/CreateCity";
 import CitiesList from "./pages/AdminDashboard/CityList";
 import ProtectedRoute from "./components/ProtectedRoutes";
+import FreeListing from "./pages/FreeListings";
 
 function Layout() {
   const location = useLocation();
@@ -69,6 +70,7 @@ function Layout() {
           <Route path="/home" element={<Home />} />
           <Route path="/businesscategories" element={<HomeCategories />} />
           <Route path="/business-details" element={<BusinessDetails />} />
+           <Route path="/free-listing" element={<FreeListing />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginPage />} />
