@@ -1,16 +1,17 @@
 // src/api/api.ts
 import axios from "axios";
 
-const API_BASE_URL = "https://wekonnects.vercel.app/api/v1" ;
-// const API_BASE_URL = "http://localhost:5000/api/v1" ;
+// const API_BASE_URL = "https://wekonnects.vercel.app/api/v1" ;
+const API_BASE_URL = "http://localhost:5000/api/v1" ;
 
 // ---------- AXIOS BASE INSTANCE ----------
 const api = axios.create({  
   baseURL: API_BASE_URL,
   withCredentials: true, // allows cookies for refresh-token
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
+  // headers: {
+    
+  //   "Content-Type": "application/json",
+  // },
 });
 
 // ---------- TOKEN HELPER ----------
@@ -73,7 +74,7 @@ export const getBusinessList = () => apiGet("/business");
 export const createEvent = (data: any) => apiPost("/events", data);
 
 // ---------- GROUPS ----------
-export const createGroup = (data: any) => apiPost("/groups", data);
+export const createGroup = (data: any) => apiPost("/groups/create", data);
 export const getGroups = () => apiGet("/groups");
 
 export default api;

@@ -84,13 +84,13 @@ const FreeListing: React.FC = () => {
           career heights and passionate about startups.
         </p>
 
-        <div className="search-box">
-          <div className="search-item">
+        <div className="search-box1">
+          <div className="search-item1">
             <Search size={20} />
             <input type="text" placeholder="Search by keyword" />
           </div>
 
-          <div className="search-item">
+          <div className="search-item1">
             <BriefcaseBusiness size={20} />
             <select>
               <option>Select Job Type</option>
@@ -99,7 +99,7 @@ const FreeListing: React.FC = () => {
             </select>
           </div>
 
-          <div className="search-item">
+          <div className="search-item1">
             <MapPin size={20} />
             <select>
               <option>Select Location</option>
@@ -108,7 +108,7 @@ const FreeListing: React.FC = () => {
             </select>
           </div>
 
-          <button className="search-btn">Search Job</button>
+          <button className="search-btn1">Search Job</button>
         </div>
 
         <p className="popular-searches">
