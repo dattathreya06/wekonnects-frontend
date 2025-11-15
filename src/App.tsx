@@ -70,7 +70,7 @@ function Layout() {
           <Route path="/home" element={<Home />} />
           <Route path="/businesscategories" element={<HomeCategories />} />
           <Route path="/business-details" element={<BusinessDetails />} />
-           <Route path="/free-listing" element={<FreeListing />} />
+          <Route path="/free-listing" element={<FreeListing />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginPage />} />
