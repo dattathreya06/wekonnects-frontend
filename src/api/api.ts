@@ -1,8 +1,8 @@
 // src/api/api.ts
 import axios from "axios";
 
-// const API_BASE_URL = "https://wekonnects.vercel.app/api/v1" ;
-const API_BASE_URL = "http://localhost:5000/api/v1" ;
+const API_BASE_URL = "https://wekonnects.vercel.app/api/v1" ;
+// const API_BASE_URL = "http://localhost:5000/api/v1" ;
 
 // ---------- AXIOS BASE INSTANCE ----------
 const api = axios.create({  
@@ -57,14 +57,14 @@ export const getAllUsers = () => apiGet("/users/all-users");
 export const updateUserStatus = (id: string, data: any) =>
   apiPatch(`/users/update-user/${id}`, data);
 // ---------- STATE APIS ----------
-export const createState = (data: any) => apiPost("/states", data);
-export const getStates = () => apiGet("/states");
+export const createState = (data: any) => apiPost("/states/create", data);
+// export const getStates = () => apiGet("/states");
 export const updateState = (id: string, data: any) =>
   apiPatch(`/states/${id}`, data);
 
 // ---------- CITY APIS ----------
 export const createCity = (data: any) => apiPost("/cities", data);
-export const getCities = () => apiGet("/cities");
+// export const getCities = () => apiGet("/cities");
 
 // ---------- BUSINESS APIS ----------
 export const createBusiness = (data: any) => apiPost("/business", data);
@@ -75,6 +75,9 @@ export const createEvent = (data: any) => apiPost("/events", data);
 
 // ---------- GROUPS ----------
 export const createGroup = (data: any) => apiPost("/groups/create", data);
+export const getStates = () => apiGet("/states");
+export const getAllCities = () => apiGet("/cities");
+export const getCities = (stateId: string) => apiGet(`/cities?stateId=${stateId}`);
 export const getGroups = () => apiGet("/groups");
 
 export default api;

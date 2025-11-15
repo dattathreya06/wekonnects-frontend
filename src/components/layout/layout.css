@@ -2,8 +2,8 @@
 .admin-header {
   position: fixed;
   top: 0;
-  left: 358px;
-  width: 80%;
+  left: 356px;
+  width: calc(100% - 356px);
   height: 120px;
   display: flex;
   align-items: center;
@@ -12,6 +12,7 @@
   background: #fff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
+  transition: left 0.3s ease, width 0.3s ease, height 0.3s ease, padding 0.3s ease;
 }
 
 .header-left {
@@ -21,9 +22,72 @@
 }
 
 .header-logo {
-  width: 220px;
+  max-width: 220px;
+  width: 100%;
   height: auto;
   object-fit: contain;
+}
+
+/* Responsive header adjustments */
+@media (max-width: 1200px) {
+  .admin-header {
+    padding: 0 1.5rem;
+  }
+  .header-logo {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* match sidebar reduced width */
+  .admin-header {
+    left: 280px;
+    width: calc(100% - 280px);
+    padding: 0 1.25rem;
+    height: 100px;
+  }
+  .header-left {
+    gap: 1rem;
+  }
+  .header-logo {
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-header {
+    padding: 0 1rem;
+    height: 90px;
+  }
+  .header-logo {
+    max-width: 160px;
+  }
+  .header-left {
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* mobile: sidebar hidden/off-canvas, header becomes full width */
+  .admin-header {
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 0.75rem;
+  }
+  .header-left {
+    gap: 0.6rem;
+  }
+  .header-logo {
+    max-width: 140px;
+  }
+  /* hide elements that may overflow on small screens (search/header links are handled elsewhere) */
+  .search-bar {
+    display: none;
+  }
+  .header-links {
+    display: none;
+  }
 }
 
 .search-bar {
@@ -46,7 +110,6 @@
 
 .search-btn {
   background-color: #FF6C00;
-;
   border: none;
   width: 50px;
   height: 56px;
