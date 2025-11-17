@@ -38,6 +38,8 @@ export const loginUser = (data: { email: string; password: string }) =>
 export const registerUser = (data: any) =>
   apiPost("/auth/register", data);
 
+export const getDashboardStats = () => apiGet("dashboard/admin-stats");
+
 export const fetchMyProfile = () => apiGet("/users/me");
 
 export const logoutUser = () => apiPost("/auth/logout", {});
@@ -58,13 +60,14 @@ export const updateUserStatus = (id: string, data: any) =>
   apiPatch(`/users/update-user/${id}`, data);
 // ---------- STATE APIS ----------
 export const createState = (data: any) => apiPost("/states/create", data);
+export const getStates = () => apiGet("/states");
 // export const getStates = () => apiGet("/states");
 export const updateState = (id: string, data: any) =>
   apiPatch(`/states/${id}`, data);
 
 // ---------- CITY APIS ----------
 export const createCity = (data: any) => apiPost("/cities", data);
-// export const getCities = () => apiGet("/cities");
+export const getAllCities = () => apiGet("/cities");
 
 // ---------- BUSINESS APIS ----------
 export const createBusiness = (data: any) => apiPost("/business", data);
@@ -75,8 +78,8 @@ export const createEvent = (data: any) => apiPost("/events", data);
 
 // ---------- GROUPS ----------
 export const createGroup = (data: any) => apiPost("/groups/create", data);
-export const getStates = () => apiGet("/states");
-export const getAllCities = () => apiGet("/cities");
+
+
 export const getCities = (stateId: string) => apiGet(`/cities?stateId=${stateId}`);
 export const getGroups = () => apiGet("/groups");
 
