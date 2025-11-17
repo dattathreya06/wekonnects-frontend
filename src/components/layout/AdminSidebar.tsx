@@ -34,6 +34,7 @@ const AdminSidebar: React.FC = () => {
     try {
       await logoutUser(); // backend call
       localStorage.removeItem("token");  // Remove token
+      localStorage.removeItem("userRole");  // Remove user role
       navigate("/login");               // Redirect to login
     } catch (err) {
       console.error("Logout failed:", err);

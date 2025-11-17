@@ -16,6 +16,7 @@ import BusinessDetails from "./pages/BusinessDetails";
 
 /* === Admin Layout + Pages === */
 import DashboardLayout from "./components/layout/DashboardLayout";
+import UserDashboardLayout from "./components/layout/UserDashboardLayout";
 import DashboardPage from "./pages/AdminDashboard";
 import EducationInfo from "./pages/AdminDashboard/EducationInfo";
 import ApplyJobsList from "./pages/AdminDashboard/ApplyJobList";
@@ -35,16 +36,18 @@ import CreateCity from "./pages/AdminDashboard/CreateCity";
 import CitiesList from "./pages/AdminDashboard/CityList";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import FreeListing from "./pages/FreeListings";
+import UserDashboardPage from "./pages/UserDashboard";
 
 function Layout() {
   const location = useLocation();
 
   // hide header/footer on all admin routes (anything starting with /admin)
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isUserRoute = location.pathname.startsWith("/user");
 
   return (
     <>
-      {!isAdminRoute && <Header />}
+      {!isAdminRoute &&  !isUserRoute && <Header />}
 
       <main
         className="container"
@@ -78,7 +81,7 @@ function Layout() {
 
           {/* ====== ADMIN PAGES (nested inside DashboardLayout) ====== */}
           {/* <Route path="/admin" element={<DashboardLayout />}> */}
-                    <Route
+          <Route
             path="/admin"
             element={
               <ProtectedRoute>
@@ -107,10 +110,27 @@ function Layout() {
             <Route path="locations/create-cities" element={<CreateCity />} />
             <Route path="locations/cities-list" element={<CitiesList />} />
           </Route>
+
+
+          {/* USER DASHBOARD */}
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute allowedRoles={["user"]}>
+                <UserDashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<UserDashboardPage />} />
+            {/* <Route path="profile" element={<UserProfile />} />
+            <Route path="my-business" element={<MyBusiness />} />
+            <Route path="jobs/applied" element={<AppliedJobs />} /> */}
+            {/* Add more user routes */}
+          </Route>
         </Routes>
       </main>
 
-      {!isAdminRoute && <Footer />}
+      {!isAdminRoute &&!isUserRoute && <Footer />}
     </>
   );
 }

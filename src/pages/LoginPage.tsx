@@ -70,12 +70,21 @@ export default function LoginPage() {
           email: formData.email,        // ← Sending email
           password: formData.password,
         });
-
+        
         const token = res.data?.data?.accessToken;
+        const role = res.data?.data?.user.role;
 
-        if (token) {
+        if (token && role === "admin") {
           localStorage.setItem("token", token);
+          localStorage.setItem("userRole", res.data?.data?.user.role);
           navigate("/admin/dashboard");
+        }else if (token && role === "user") {
+          localStorage.setItem("token", token);
+          localStorage.setItem("userRole", res.data?.data?.user.role);
+          navigate("/user/dashboard");
+        }
+        else{
+          navigate("/");
         }
       } catch (error: any) {
         const message =

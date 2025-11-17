@@ -111,13 +111,14 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
+      // This matches your Postman body + includes phone & optional referral
       await registerUser({
         name: formData.name.trim(),
-        email: formData.email.trim(),
+        email: formData.email.trim().toLowerCase(),
         password: formData.password,
-        phone: formData.phone,
-        referralCode: formData.referral || undefined, // optional
-        role: "user",
+        role: "user", // as per your Postman example
+        phone: formData.phone, // your form has this field
+        referralCode: formData.referral.trim() || undefined, // optional
       });
 
       alert("Registration successful! Please log in.");
@@ -125,6 +126,7 @@ export default function SignupPage() {
     } catch (error: any) {
       const message =
         error.response?.data?.message ||
+        error.response?.data?.error ||
         error.message ||
         "Signup failed. Please try again.";
       alert(message);
