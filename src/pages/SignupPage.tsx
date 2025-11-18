@@ -2,6 +2,7 @@ import "../styles/auth.css";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { registerUser } from "../api/api";
 
 export default function SignupPage() {
@@ -107,7 +108,7 @@ export default function SignupPage() {
     e.preventDefault();
 
     if (!validateForm()) return;
-
+    const loadingToast = toast.loading("Creating your account...");
     setIsLoading(true);
 
     try {
@@ -121,7 +122,9 @@ export default function SignupPage() {
         referralCode: formData.referral.trim() || undefined, // optional
       });
 
-      alert("Registration successful! Please log in.");
+   toast.success("Account created successfully! Please log in.", {
+        id: loadingToast,
+      });
       navigate("/login");
     } catch (error: any) {
       const message =
@@ -129,7 +132,7 @@ export default function SignupPage() {
         error.response?.data?.error ||
         error.message ||
         "Signup failed. Please try again.";
-      alert(message);
+     toast.error(message, { id: loadingToast });
     } finally {
       setIsLoading(false);
     }

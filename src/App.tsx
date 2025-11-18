@@ -37,6 +37,8 @@ import CitiesList from "./pages/AdminDashboard/CityList";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import FreeListing from "./pages/FreeListings";
 import UserDashboardPage from "./pages/UserDashboard";
+import UserAddBusiness from "./pages/UserDashboard/UserAddBusiness";
+import { Toaster } from 'react-hot-toast';
 
 function Layout() {
   const location = useLocation();
@@ -48,6 +50,42 @@ function Layout() {
   return (
     <>
       {!isAdminRoute &&  !isUserRoute && <Header />}
+      <Toaster
+        position="top-right"        // You can change: top-center, bottom-right, etc.
+        reverseOrder={false}
+        gutter={8}
+        toastOptions={{
+          duration: 4000,           // Auto close after 4 seconds
+          style: {
+            background: '#363636',
+            color: '#fff',
+            fontSize: '16px',
+            padding: '16px',
+            borderRadius: '8px',
+          },
+
+          // Default styles for types
+          success: {
+            duration: 5000,
+            icon: '✓',
+            style: {
+              background: '#10B981',   // Green
+              color: 'white',
+            },
+          },
+          error: {
+            duration: 6000,
+            icon: '✖',
+            style: {
+              background: '#EF4444',   // Red
+              color: 'white',
+            },
+          },
+          loading: {
+            duration: 10000,
+          },
+        }}
+      />
 
       <main
         className="container"
@@ -122,10 +160,9 @@ function Layout() {
             }
           >
             <Route path="dashboard" element={<UserDashboardPage />} />
-            {/* <Route path="profile" element={<UserProfile />} />
-            <Route path="my-business" element={<MyBusiness />} />
-            <Route path="jobs/applied" element={<AppliedJobs />} /> */}
-            {/* Add more user routes */}
+            <Route path="my-business/add" element={<UserAddBusiness/>} />
+           
+           
           </Route>
         </Routes>
       </main>

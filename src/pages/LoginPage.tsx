@@ -3,7 +3,7 @@ import "../styles/auth.css";
 import logo from "../assets/logo.png";
 import { useState } from "react";
 import { loginUser } from "../api/api";
-
+import toast from "react-hot-toast";
 export default function LoginPage() {
   const navigate = useNavigate();
 
@@ -64,37 +64,41 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      try {
-        const res = await loginUser({
-          email: formData.email,        // ← Sending email
-          password: formData.password,
-        });
-        
-        const token = res.data?.data?.accessToken;
-        const role = res.data?.data?.user.role;
+  if (!validateForm()) return;
 
-        if (token && role === "admin") {
-          localStorage.setItem("token", token);
-          localStorage.setItem("userRole", res.data?.data?.user.role);
-          navigate("/admin/dashboard");
-        }else if (token && role === "user") {
-          localStorage.setItem("token", token);
-          localStorage.setItem("userRole", res.data?.data?.user.role);
-          navigate("/user/dashboard");
-        }
-        else{
-          navigate("/");
-        }
-      } catch (error: any) {
-        const message =
-          error.response?.data?.message ||
-          error.message ||
-          "Login failed. Please try again.";
-        alert(message);
+    const loadingToast = toast.loading("Logging you in...");
+
+    try {
+      const res = await loginUser({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      const token = res.data?.data?.accessToken;
+      const role = res.data?.data?.user.role;
+
+      toast.success("Login successful! Welcome back 👋", { id: loadingToast });
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("userRole", role);
+
+      if (role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (role === "user") {
+        navigate("/user/dashboard");
+      } else {
+        navigate("/");
       }
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Invalid email or password";
+
+      toast.error(message, { id: loadingToast });
     }
   };
+
 
   return (
     <section className="auth-page">

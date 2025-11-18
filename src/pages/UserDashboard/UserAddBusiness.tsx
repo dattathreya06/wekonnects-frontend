@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { createBusiness,getAllCities } from "../../api/api";
-import { MapPin, Upload, Edit } from "lucide-react";
+import { createBusiness, getAllCities, getAllCategories } from "../../api/api";
+import { MapPin, Upload, Edit,Check } from "lucide-react";
 import "../../components/layout/layout.css";
+import { useNavigate } from "react-router-dom";
+import toast  from 'react-hot-toast';
 
 interface City {
   _id: string;
   name: string;
 }
 
-const AddBusiness: React.FC = () => {
+interface Category {
+  _id: string;
+  name: string;
+}
+
+const UserAddBusiness: React.FC = () => {
+  const navigate = useNavigate(); 
   const [formData, setFormData] = useState({
     businessName: "",
     phone: "",
@@ -19,7 +27,7 @@ const AddBusiness: React.FC = () => {
     ownerName: "",
     ownerMobile: "",
     dob: "",
-    category: "",
+    categoryId: "",           // ← changed from "category" to "categoryId"
     subCategory: "",
     businessHours: "",
     businessType: "",
@@ -32,12 +40,14 @@ const AddBusiness: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [mediaFiles, setMediaFiles] = useState<File[]>([]);
   const [cities, setCities] = useState<City[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);   // ← Fixed: was outside component
   const [, setLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [ownerImage, setOwnerImage] = useState<File | null>(null);
 
-  // Fetch cities
+  // Fetch cities (unchanged)
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -46,12 +56,28 @@ const AddBusiness: React.FC = () => {
         setCities(res.data?.data || []);
       } catch (err) {
         console.error("Failed to load cities");
+      toast.error("Failed to load cities");
       } finally {
         setLoading(false);
       }
     };
     fetchCities();
   }, []);
+
+  // ← Fixed: This useEffect was outside the component before
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await getAllCategories();
+        setCategories(res.data?.data || []);
+      } catch (err) {
+        console.error("Failed to load categories");
+        toast.error("Failed to load categories");
+      }
+    };
+    fetchCategories();
+  }, []);
+  // ← End of fixed useEffect
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -77,14 +103,19 @@ const AddBusiness: React.FC = () => {
     e.preventDefault();
 
     // Validation
-    if (!formData.businessName || !formData.phone || !imageFile || !formData.cityId) {
-      setError("Business Name, Phone, Image, and City are required.");
+    if (!formData.businessName || !formData.phone || !imageFile || !formData.cityId || !formData.description) {
+      setError("Business Name, Phone, Image, City and Description are required.");
       return;
     }
+      if (!ownerImage) {
+        setError("Owner Image is required.");
+        return;
+      }
 
     const payload = new FormData();
     payload.append("businessName", formData.businessName);
     payload.append("phone", formData.phone);
+    payload.append("ownerImage", ownerImage); 
     if (formData.altPhone) payload.append("altPhone", formData.altPhone);
     if (formData.whatsapp) payload.append("whatsapp", formData.whatsapp);
     payload.append("cityId", formData.cityId);
@@ -92,7 +123,10 @@ const AddBusiness: React.FC = () => {
     if (formData.ownerName) payload.append("ownerName", formData.ownerName);
     payload.append("ownerMobile", formData.ownerMobile);
     if (formData.dob) payload.append("dob", formData.dob);
-    if (formData.category) payload.append("category", formData.category);
+    
+  
+    if (formData.categoryId) payload.append("categoryId", formData.categoryId);
+    
     if (formData.subCategory) payload.append("subCategory", formData.subCategory);
     if (formData.businessHours) payload.append("businessHours", formData.businessHours);
     if (formData.businessType) payload.append("businessType", formData.businessType);
@@ -110,6 +144,7 @@ const AddBusiness: React.FC = () => {
 
     try {
       await createBusiness(payload);
+      toast.success("Business added successfully! It will be live after admin approval.");
       setSuccess(true);
       // Reset form
       setFormData({
@@ -122,7 +157,7 @@ const AddBusiness: React.FC = () => {
         ownerName: "",
         ownerMobile: "",
         dob: "",
-        category: "",
+        categoryId: "",
         subCategory: "",
         businessHours: "",
         businessType: "",
@@ -138,11 +173,58 @@ const AddBusiness: React.FC = () => {
       inputs.forEach((i) => ((i as HTMLInputElement).value = ""));
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to create business");
+      toast.error(err.response?.data?.message || "Failed to create business");
     } finally {
       setSubmitLoading(false);
     }
   };
+// SUCCESS SCREEN — EXACTLY LIKE YOUR SCREENSHOT
+  if (success) {
+    return (
+      <div className="dashboard-content add-business-page" style={{ textAlign: "center", paddingTop: "80px" }}>
+        <div style={{ marginBottom: "40px" }}>
+          <div
+            style={{
+              width: "120px",
+              height: "120px",
+              backgroundColor: "#00C853",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 30px",
+            }}
+          >
+            <Check size={70} color="white" strokeWidth={4} />
+          </div>
 
+          <h1 style={{ fontSize: "48px", fontWeight: "bold", marginBottom: "20px" }}>
+            Congratulations !!
+          </h1>
+
+          <p style={{ fontSize: "20px", color: "#666", maxWidth: "600px", margin: "0 auto 40px" }}>
+            Thank you for listing your business with wekonnects. please note that your
+            listing will be activated once it has been approved by our admin
+          </p>
+
+          <button
+            onClick={() => navigate("/user/dashboard")} 
+            style={{
+              backgroundColor: "transparent",
+              color: "#0066FF",
+              fontSize: "18px",
+              textDecoration: "underline",
+              border: "none",
+              cursor: "pointer",
+              padding: "10px 20px",
+            }}
+          >
+            Continue to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="dashboard-content add-business-page">
       <h1 className="page-title">Add New Business</h1>
@@ -266,6 +348,20 @@ const AddBusiness: React.FC = () => {
               required
             />
           </div>
+          {/* === Add this new field === */}
+<div className="form-group required">
+  <label>Owner Image</label>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      const file = e.target.files?.[0] || null;
+      setOwnerImage(file);   // you'll need this state
+    }}
+    required
+  />
+  {ownerImage && <p className="file-name">Selected: {ownerImage.name}</p>}
+</div>
 
           <div className="form-group">
             <label>Date Of Birth</label>
@@ -277,18 +373,24 @@ const AddBusiness: React.FC = () => {
             />
           </div>
 
+          {/* ← Fixed: Now dynamic + uses real category _id */}
           <div className="form-group">
             <label>Business Category</label>
             <select
-              name="category"
-              value={formData.category}
+              name="categoryId"
+              value={formData.categoryId}
               onChange={handleChange}
+              required
             >
-              <option>Choose category</option>
-              <option value="loans">Loans</option>
-              <option value="software">Software</option>
+              <option value="">Choose category</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
+          {/* ← End of fix */}
 
           <div className="form-group">
             <label>Sub Category</label>
@@ -447,4 +549,4 @@ const AddBusiness: React.FC = () => {
   );
 };
 
-export default AddBusiness;
+export default UserAddBusiness;
