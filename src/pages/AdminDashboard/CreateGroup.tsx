@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createGroup, getStates, getCities } from "../../api/api";
 import "../../components/layout/layout.css";
+import toast from "react-hot-toast"; // ← Added
 
 interface State {
   _id: string;
@@ -24,18 +25,18 @@ const CreateGroup: React.FC = () => {
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   // Fetch States on Mount
   useEffect(() => {
     const fetchStates = async () => {
+      // const toastId = toast.loading("Loading states...");
       try {
         setLoading(true);
         const res = await getStates();
-        setStates(res.data.data); // adjust based on your API response
+        setStates(res.data.data || res.data);
+        // toast.success("States loaded", { id: toastId });
       } catch (err: any) {
-        setError("Failed to load states");
+        // toast.error("Failed to load states", { id: toastId });
       } finally {
         setLoading(false);
       }
@@ -51,12 +52,15 @@ const CreateGroup: React.FC = () => {
     }
 
     const fetchCities = async () => {
+      const toastId = toast.loading("Loading cities...");
       try {
         setLoading(true);
         const res = await getCities(formData.stateId);
-        setCities(res.data.data);
+        setCities(res.data.data || res.data);
+        // toast.success("Cities loaded", { id: toastId });
       } catch (err: any) {
-        setError("Failed to load cities");
+        setCities([]);
+        toast.error("Failed to load cities", { id: toastId });
       } finally {
         setLoading(false);
       }
@@ -71,40 +75,55 @@ const CreateGroup: React.FC = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "stateId" && { cityId: "" }), // reset city
+      ...(name === "stateId" && { cityId: "" }), // reset city when state changes
     }));
-    setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.stateId || !formData.cityId) {
-      setError("All fields are required.");
+    // Client-side validation
+    if (!formData.name.trim()) {
+      toast.error("Group name is required.");
+      return;
+    }
+    if (!formData.stateId) {
+      toast.error("Please select a state.");
+      return;
+    }
+    if (!formData.cityId) {
+      toast.error("Please select a city.");
       return;
     }
 
+    const submittingToast = toast.loading("Creating group...");
+
     setSubmitLoading(true);
-    setError(null);
-    setSuccess(false);
 
     try {
       await createGroup({
-        name: formData.name,
+        name: formData.name.trim(),
         status: formData.status,
-        stateId: formData.stateId,  // Real ObjectId
-        cityId: formData.cityId,    // Real ObjectId
+        stateId: formData.stateId,
+        cityId: formData.cityId,
       });
 
-      setSuccess(true);
+      toast.success("Group created successfully! 🎉", { id: submittingToast });
+
+      // Reset form
       setFormData({
         name: "",
         status: "active",
         stateId: "",
         cityId: "",
       });
+      setCities([]); // Clear cities when resetting
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to create group");
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to create group";
+      toast.error(message, { id: submittingToast });
     } finally {
       setSubmitLoading(false);
     }
@@ -126,6 +145,7 @@ const CreateGroup: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               required
+              disabled={submitLoading}
             />
           </div>
 
@@ -137,9 +157,11 @@ const CreateGroup: React.FC = () => {
               value={formData.stateId}
               onChange={handleChange}
               required
-              disabled={loading}
+              disabled={loading || submitLoading}
             >
-              <option value="">{loading ? "Loading..." : "Select a state"}</option>
+              <option value="">
+                {loading ? "Loading states..." : "Select a state"}
+              </option>
               {states.map((state) => (
                 <option key={state._id} value={state._id}>
                   {state.name}
@@ -156,14 +178,14 @@ const CreateGroup: React.FC = () => {
               value={formData.cityId}
               onChange={handleChange}
               required
-              disabled={loading || !formData.stateId}
+              disabled={loading || !formData.stateId || submitLoading}
             >
               <option value="">
-                {formData.stateId
-                  ? loading
-                    ? "Loading cities..."
-                    : "Select a city"
-                  : "Select state first"}
+                {!formData.stateId
+                  ? "Select state first"
+                  : loading
+                  ? "Loading cities..."
+                  : "Select a city"}
               </option>
               {cities.map((city) => (
                 <option key={city._id} value={city._id}>
@@ -173,16 +195,12 @@ const CreateGroup: React.FC = () => {
             </select>
           </div>
 
-          {/* Messages */}
-          {error && <p className="error-text">{error}</p>}
-          {success && <p className="success-text">Group created successfully!</p>}
-
-          {/* Submit */}
+          {/* Submit Button */}
           <div className="form-actions align-right">
             <button
               type="submit"
               className="save-btn"
-              disabled={submitLoading}
+              disabled={submitLoading || loading}
             >
               {submitLoading ? "Creating..." : "Create Group"}
             </button>

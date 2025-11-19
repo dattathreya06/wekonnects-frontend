@@ -49,7 +49,7 @@ const AdminSidebar: React.FC = () => {
       <div className="sidebar-logo">
         <img src={logo} alt="We Konnects Logo" />
       </div>
-
+<div className="sidebar-nav-scrollable">
       <nav className="sidebar-nav">
         {/* ===== Dashboard ===== */}
         <NavLink
@@ -155,7 +155,7 @@ const AdminSidebar: React.FC = () => {
                 to="/admin/business/list"
                 className={({ isActive }) => (isActive ? "sub-active" : "")}
               >
-                Business List
+                Business pending List
               </NavLink>
                <NavLink
                 to="/admin/business/expire-listings"
@@ -291,8 +291,9 @@ const AdminSidebar: React.FC = () => {
           )}
         </div>
       </nav>
+      </div>
       {/* LOGOUT BUTTON */}
-      <div className="logout-section">
+     <div className="logout-section">
         <button className="logout-btn" onClick={handleLogout}>
           <LogOut size={20} />
           <span>Logout</span>

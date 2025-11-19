@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { createCity, getStates } from "../../api/api"; 
+import { createCity, getStates } from "../../api/api";
 import "../../components/layout/layout.css";
+import toast from "react-hot-toast";
 
 interface State {
   _id: string;
@@ -17,18 +18,18 @@ const CreateCity: React.FC = () => {
   const [states, setStates] = useState<State[]>([]);
   const [loading, setLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   // Fetch States on Mount
   useEffect(() => {
     const fetchStates = async () => {
+      // const loadingToast = toast.loading("Loading states...");
       try {
         setLoading(true);
         const res = await getStates();
-        setStates(res.data.data || res.data); // adjust based on your API
+        setStates(res.data.data || res.data);
+        // toast.success("States loaded successfully", { id: loadingToast });
       } catch (err: any) {
-        setError("Failed to load states");
+        toast.error("Failed to load states");
       } finally {
         setLoading(false);
       }
@@ -41,40 +42,45 @@ const CreateCity: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name.trim()) {
-      setError("City name is required.");
+      toast.error("City name is required.");
       return;
     }
     if (!formData.stateId) {
-      setError("Please select a state.");
+      toast.error("Please select a state.");
       return;
     }
 
+    const submitToast = toast.loading("Creating city...");
+
     setSubmitLoading(true);
-    setError(null);
-    setSuccess(false);
 
     try {
       await createCity({
         name: formData.name.trim(),
         status: formData.status,
-        stateId: formData.stateId, // Real ObjectId
+        stateId: formData.stateId,
       });
 
-      setSuccess(true);
+      toast.success("City created successfully!", { id: submitToast });
+
+      // Reset form after success
       setFormData({
         name: "",
         status: "active",
         stateId: "",
       });
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to create city");
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to create city";
+      toast.error(message, { id: submitToast });
     } finally {
       setSubmitLoading(false);
     }
@@ -96,7 +102,7 @@ const CreateCity: React.FC = () => {
               value={formData.stateId}
               onChange={handleChange}
               required
-              disabled={loading}
+              disabled={loading || submitLoading}
             >
               <option value="">
                 {loading ? "Loading states..." : "Select State"}
@@ -119,6 +125,7 @@ const CreateCity: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               required
+              disabled={submitLoading}
             />
           </div>
 
@@ -130,22 +137,19 @@ const CreateCity: React.FC = () => {
               value={formData.status}
               onChange={handleChange}
               required
+              disabled={submitLoading}
             >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
           </div>
 
-          {/* Messages */}
-          {error && <p className="error-text">{error}</p>}
-          {success && <p className="success-text">City created successfully!</p>}
-
-          {/* Submit */}
+          {/* Submit Button */}
           <div className="form-actions">
             <button
               type="submit"
               className="save-btn"
-              disabled={submitLoading}
+              disabled={submitLoading || loading}
             >
               {submitLoading ? "Adding..." : "Add City"}
             </button>

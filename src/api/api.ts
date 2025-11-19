@@ -69,19 +69,23 @@ export const updateState = (id: string, data: any) =>
 // ---------- CITY APIS ----------
 export const createCity = (data: any) => apiPost("/cities", data);
 export const getAllCities = () => apiGet("/cities");
+export const getCities = (stateId: string) => apiGet(`/cities?stateId=${stateId}`);
 
 // ---------- BUSINESS APIS ----------
 export const createBusiness = (data: any) => apiPost("/business", data);
-export const getBusinessList = () => apiGet("/business");
+// ---------- BUSINESS APIS ADMIN----------
+export const getPendingBusinessList = () => apiGet("/business/pending");
+export const getAllAprrovedBusinessList = () => apiGet("/business");
 
+export const approveOrRejectBusiness = (id: string, data: { status: "approved" | "rejected" }) =>
+  apiPatch(`/business/${id}/status`, data);
 // ---------- EVENTS ----------
 export const createEvent = (data: any) => apiPost("/events", data);
 
 // ---------- GROUPS ----------
 export const createGroup = (data: any) => apiPost("/groups/create", data);
-
-
-export const getCities = (stateId: string) => apiGet(`/cities?stateId=${stateId}`);
 export const getGroups = () => apiGet("/groups");
+export const UpdateGroup = (id: string, data: any) => apiPatch(`/groups/${id}`, data);
+export const deleteGroup = (id: string) => apiDelete(`/groups/${id}`);
 
 export default api;

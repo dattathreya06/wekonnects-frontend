@@ -48,7 +48,7 @@ const ApplyJobsList: React.FC = () => {
             {jobs.map((job, index) => (
               <tr
                 key={job.id + index}
-                className={index === 8 ? "selected-row" : ""}
+                className={ ""}
               >
                 <td>{job.id}</td>
                 <td>{job.date}</td>
