@@ -39,6 +39,8 @@ import FreeListing from "./pages/FreeListings";
 import UserDashboardPage from "./pages/UserDashboard";
 import UserAddBusiness from "./pages/UserDashboard/UserAddBusiness";
 import { Toaster } from 'react-hot-toast';
+import JobResults from "./pages/JobResults";
+import JobDetails from "./pages/JobDetails";
 
 function Layout() {
   const location = useLocation();
@@ -116,6 +118,9 @@ function Layout() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/jobs/results" element={<JobResults />} />
+          <Route path="/jobs/:id" element={<JobDetails />} />
+
 
           {/* ====== ADMIN PAGES (nested inside DashboardLayout) ====== */}
           {/* <Route path="/admin" element={<DashboardLayout />}> */}
