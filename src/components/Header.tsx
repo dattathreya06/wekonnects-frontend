@@ -295,8 +295,8 @@ export default function Header() {
           </Link>
 
           <Link className="nav-item nav-free" to="/free-listing">
-            <span className="free-pill">BUSINESS</span>
-            <IconGrowth /> Free Listing
+            {/* <span className="free-pill">BUSINESS</span> */}
+            <IconGrowth /> Jobs
           </Link>
 
           <button className="notify-btn" aria-label="Notifications">
@@ -383,7 +383,7 @@ export default function Header() {
               <span style={{ marginRight: 8, display: "inline-flex" }}>
                 <IconGrowth />
               </span>
-              Free Listing
+              Jobs
             </ScrollLink>
 
             <Link

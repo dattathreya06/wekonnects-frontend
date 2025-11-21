@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const FreeListing: React.FC = () => {
 const navigate = useNavigate();
 const handleSearch = () => {
-  navigate("/jobs/search?keyword=test"); 
+  navigate("/jobs/results"); 
 }
   // -------------------------
   // CATEGORY CARDS

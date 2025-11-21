@@ -1,4 +1,3 @@
-// src/api/api.ts
 import axios from "axios";
 
 // const API_BASE_URL = "https://wekonnects.vercel.app/api/v1" ;
@@ -8,7 +7,7 @@ const API_BASE_URL = "https://wekonnects-server.vercel.app/api/v1"
 // ---------- AXIOS BASE INSTANCE ----------
 const api = axios.create({  
   baseURL: API_BASE_URL,
-  withCredentials: true, // allows cookies for refresh-token
+  withCredentials: true, 
   // headers: {
     
   //   "Content-Type": "application/json",
@@ -87,5 +86,10 @@ export const createGroup = (data: any) => apiPost("/groups/create", data);
 export const getGroups = () => apiGet("/groups");
 export const UpdateGroup = (id: string, data: any) => apiPatch(`/groups/${id}`, data);
 export const deleteGroup = (id: string) => apiDelete(`/groups/${id}`);
+
+
+// ---------- JOBS ----------
+
+export const createJob = (data: any) => apiPost("/jobs/create", data);//admin create job
 
 export default api;
